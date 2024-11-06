@@ -1,11 +1,12 @@
-import './App.css'
+import React from 'react';
+import TaskBoard from './components/TaskBoard';
 
 function App() {
   return (
-    <>
-      hello world !
-    </>
-  )
+    <div className="min-h-screen bg-gray-50 p-4">
+      <TaskBoard />
+    </div>
+  );
 }
 
-export default App
+export default App;

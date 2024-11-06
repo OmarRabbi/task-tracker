@@ -8,14 +8,15 @@ import { CgProfile } from "react-icons/cg";
 function TaskCard({ task }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleCardClick = () => setIsModalOpen(true);
+  // Function to open the modal specifically for attachments
+  const handleAttachmentClick = (event) => {
+    event.stopPropagation(); // Prevents opening the modal for the entire card
+    setIsModalOpen(true);
+  };
 
   return (
     <>
-      <div
-        onClick={handleCardClick}
-        className="bg-white p-2 rounded-md shadow-md cursor-pointer w-72 h-auto"
-      >
+      <div className="bg-white p-2 rounded-md shadow-md cursor-pointer w-72 h-auto">
         {/* Top Section */}
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
@@ -32,7 +33,11 @@ function TaskCard({ task }) {
         <div className="flex justify-between items-center my-2">
           <div className="flex items-center space-x-1">
             <TbBrandDatabricks />
-            <span className="text-xs text-gray-600">{task.description}</span>
+            <span className="text-xs text-gray-600">
+              {task.description.length > 30
+                ? `${task.description.slice(0, 30)}...`
+                : task.description}
+            </span>
           </div>
           <div className="flex items-center space-x-1 p-1 rounded-md bg-gray-100">
             <MdAssignment />
@@ -53,15 +58,21 @@ function TaskCard({ task }) {
               </span>
             </div>
             <div className="flex items-center space-x-1">
-              <FaComments className="w-3 h-3"/>
+              <FaComments className="w-3 h-3" />
               <span className="text-[10px] font-semibold">{task.comments}</span>
             </div>
-            <div className="flex items-center space-x-1">
-              <FaPaperclip className="w-3 h-3"/>
-              <span className="text-[10px] font-semibold">{task.attachments}</span>
+            {/* Attachment Icon */}
+            <div
+              className="flex items-center space-x-1 cursor-pointer"
+              onClick={handleAttachmentClick}
+            >
+              <FaPaperclip className="w-3 h-3" />
+              <span className="text-[10px] font-semibold">
+                {task.attachments}
+              </span>
             </div>
             <div className="flex items-center space-x-1">
-              <FaCalendarAlt className="w-3 h-3"/>
+              <FaCalendarAlt className="w-3 h-3" />
               <span className="text-[10px] font-semibold">{task.dueDate}</span>
             </div>
           </div>

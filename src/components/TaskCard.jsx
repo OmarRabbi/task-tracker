@@ -7,13 +7,12 @@ import { CgProfile } from "react-icons/cg";
 
 function TaskCard({ task }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Function to open the modal specifically for attachments
+  // Function to open the modal for attachments
   const handleAttachmentClick = (event) => {
-    event.stopPropagation(); // Prevents opening the modal for the entire card
+    event.stopPropagation();
     setIsModalOpen(true);
   };
-
+  const attachmentCount = task.attachments ? task.attachments.length : 0;
   return (
     <>
       <div className="bg-white p-2 rounded-md shadow-md cursor-pointer w-72 h-auto">
@@ -28,7 +27,6 @@ function TaskCard({ task }) {
             <span className="text-xs font-semibold">{task.creatorName}</span>
           </div>
         </div>
-
         {/* Task Description */}
         <div className="flex justify-between items-center my-2">
           <div className="flex items-center space-x-1">
@@ -46,7 +44,6 @@ function TaskCard({ task }) {
             </span>
           </div>
         </div>
-
         {/* Footer Section */}
         <div className="w-[100%] flex items-center justify-between mt-2">
           <div className="flex space-x-4">
@@ -61,14 +58,14 @@ function TaskCard({ task }) {
               <FaComments className="w-3 h-3" />
               <span className="text-[10px] font-semibold">{task.comments}</span>
             </div>
-            {/* Attachment Icon */}
             <div
               className="flex items-center space-x-1 cursor-pointer"
               onClick={handleAttachmentClick}
             >
               <FaPaperclip className="w-3 h-3" />
               <span className="text-[10px] font-semibold">
-                {task.attachments}
+                {attachmentCount > 0
+                  && `${attachmentCount}`}
               </span>
             </div>
             <div className="flex items-center space-x-1">
@@ -78,7 +75,6 @@ function TaskCard({ task }) {
           </div>
         </div>
       </div>
-
       {isModalOpen && (
         <TaskModal task={task} onClose={() => setIsModalOpen(false)} />
       )}
